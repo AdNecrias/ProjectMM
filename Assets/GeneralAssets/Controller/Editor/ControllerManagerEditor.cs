@@ -2,8 +2,8 @@
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(AMControllerManager))]
-public class AMControllerManagerEditor : Editor {
+[CustomEditor(typeof(ControllerManager))]
+public class ControllerManagerEditor : Editor {
 
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
