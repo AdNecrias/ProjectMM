@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ControllerManager))]
+[CustomEditor(typeof(MainGame.ControllerManager))]
 public class ControllerManagerEditor : Editor {
 
     public override void OnInspectorGUI() {
