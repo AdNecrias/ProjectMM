@@ -35,6 +35,7 @@ internal class StandardShaderGUI : ShaderGUI
 		public static GUIContent alphaCutoffText = new GUIContent("Alpha Cutoff", "Threshold for alpha cutoff");
         //AM shaders
         public static GUIContent nsOutlineText = new GUIContent("NS Outline", "Color for the NS outline of AM shaders"); // ignoring tooltip
+        public static GUIContent haTintText = new GUIContent("HA Tint", "Color for the HA Tint of AM shaders"); // ignoring tooltip
         //end AM shaders
         public static GUIContent specularMapText = new GUIContent("Specular", "Specular (RGB) and Smoothness (A)");
 		public static GUIContent metallicMapText = new GUIContent("Metallic", "Metallic (R) and Smoothness (A)");
@@ -62,6 +63,7 @@ internal class StandardShaderGUI : ShaderGUI
     MaterialProperty alphaCutoff = null;
         /// AM parameters
     MaterialProperty nsOutline = null;
+    MaterialProperty haTint = null;
         /// end AM parameters
     MaterialProperty specularMap = null;
 	MaterialProperty specularColor = null;
@@ -96,6 +98,7 @@ internal class StandardShaderGUI : ShaderGUI
 		alphaCutoff = FindProperty ("_Cutoff", props);
         /// AM parameters
         nsOutline = FindProperty("_AM_NSOutline", props);
+        haTint = FindProperty("_AM_HATint", props);
         /// end AM parameters
         specularMap = FindProperty ("_SpecGlossMap", props, false);
 		specularColor = FindProperty ("_SpecColor", props, false);
@@ -250,6 +253,7 @@ internal class StandardShaderGUI : ShaderGUI
     void DoAMShadersArea(Material material) {
         //m_MaterialEditor.TexturePropertySingleLine(Styles.albedoText, albedoMap, albedoColor);
         m_MaterialEditor.ColorProperty(nsOutline, Styles.nsOutlineText.text); // ignoring tooltip
+        m_MaterialEditor.ColorProperty(haTint, Styles.haTintText.text); // ignoring tooltip
     }
 
         void DoEmissionArea(Material material)

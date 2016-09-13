@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-
+		_AM_Sharpness("Sharpness", Range(0.0, 10.0)) = 2.5
 	}
 	SubShader
 	{
@@ -51,11 +51,15 @@
 			}
 
 			float4 _AM_NSOutline;
+			float4 _AM_HATint;
+			float _AM_Sharpness;
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-				float NdotV = 1 - dot(i.normal, i.viewDir) * 1.5;
-				return _AM_NSOutline * NdotV;
+				//_AM_Sharpness = 2.5f;
+				float NdotV = dot(i.normal, i.viewDir) * _AM_Sharpness;
+				float invNdotV = 1 - dot(i.normal, i.viewDir) * _AM_Sharpness;
+				return _AM_NSOutline * invNdotV + NdotV * _AM_HATint;
 			}
 			ENDCG
 		}
@@ -107,13 +111,17 @@
 			}
 
 			float4 _AM_NSOutline;
+			float4 _AM_HATint;
+			float _AM_Sharpness;
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				float NdotV = 1 - dot(i.normal, i.viewDir) * 1.5;
-				return _AM_NSOutline * NdotV;
+				//_AM_Sharpness = 2.5f;
+				float NdotV = dot(i.normal, i.viewDir) * _AM_Sharpness;
+			float invNdotV = 1 - dot(i.normal, i.viewDir) * _AM_Sharpness;
+			return _AM_NSOutline * invNdotV + NdotV * _AM_HATint;
 			}
-			ENDCG
+				ENDCG
 		}
 	}
 }
