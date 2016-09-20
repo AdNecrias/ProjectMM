@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Net;
 
 public enum ControlInfo {
-    Dash, MouseMoved
+    Dash, MouseMoved, Fire, FireReleased, SwapWeapon
 }
 
 public static class KeyBindings {
@@ -14,9 +15,12 @@ public static class KeyBindings {
     public static KeyCode moveUp = KeyCode.W;
     public static KeyCode moveDown = KeyCode.S;
     public static KeyCode moveWalk = KeyCode.LeftControl;
+    public static KeyCode fire = KeyCode.Mouse0;
     public static KeyCode dash = KeyCode.LeftShift;
     ///Controller
-    public static KeyCode dashController = KeyCode.JoystickButton4; //L1
+    public static KeyCode dashController = KeyCode.JoystickButton0; //A
+    public static KeyCode fireController = KeyCode.Joystick1Button5; //Right Trigger
+    public static KeyCode swapWeaponController = KeyCode.Joystick1Button3;  //Y
 
 }
 
@@ -25,13 +29,12 @@ public static class KeyBindings {
 /// </summary>
 public class AMControllerManager : MonoBehaviour {
     public static AMControllerManager instance;
-    
-    Action<ControlInfo> keyPressed;
-    public float MovementAxisX;
-    public float MovementAxisY;
+
+    Action<ControlInfo> keyPressed, keyReleased;
+    public float MovementAxisX, MovementAxisY;
+    public float LookAxisX, LookAxisY;
     public bool Dash;
-    public float LookAxisX;
-    public float LookAxisY;
+    public bool Fire, FireRelease, SwapWeapon;
     public Vector3 MouseLookPoint;
 
     Vector3 previousMousePosition;
@@ -46,6 +49,14 @@ public class AMControllerManager : MonoBehaviour {
         keyPressed -= callback;
     }
 
+    public void RegisterKeyReleasedCallback(Action<ControlInfo> callback) {
+        keyReleased += callback;
+    }
+
+    public void UnregisterKeyReleasedCallback(Action<ControlInfo> callback) {
+        keyReleased -= callback;
+    }
+
     public void singleton() {
         if (instance != null) {
             Destroy(this);
@@ -55,13 +66,13 @@ public class AMControllerManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Awake () {
+    void Awake() {
         singleton();
         mousePlane = new Plane(Vector3.up, Vector3.zero); // TODO Switch Vector3.zero to playerPosition? Do we even have that here?
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update() {
         // Movement
         /// Controller
         MovementAxisX = Input.GetAxis("Horizontal");
@@ -83,17 +94,30 @@ public class AMControllerManager : MonoBehaviour {
             MovementAxisY += movementWalk;
         }
 
+
         MovementAxisX = Mathf.Clamp(MovementAxisX, -1, 1);
         MovementAxisY = Mathf.Clamp(MovementAxisY, -1, 1);
 
-        Dash = Input.GetKey(KeyBindings.dash) || Input.GetKey(KeyBindings.dashController);
-        if(Dash && keyPressed != null)
-            keyPressed(ControlInfo.Dash);
+        //Dash
+        Dash = Input.GetKeyDown(KeyBindings.dash) || Input.GetKeyDown(KeyBindings.dashController);
+        if (Dash && keyPressed != null) keyPressed(ControlInfo.Dash);
+
+        //Fire
+        Fire = Input.GetKeyDown(KeyBindings.fire) || Input.GetKeyDown(KeyBindings.fireController);
+        if (Fire) keyPressed(ControlInfo.Fire);
+
+        FireRelease = Input.GetKeyUp(KeyBindings.fire) || Input.GetKeyUp(KeyBindings.fireController);
+        if (FireRelease) keyReleased(ControlInfo.FireReleased);
+
+        //Swap Weapon
+        SwapWeapon = Input.GetKey(KeyBindings.swapWeaponController);
+        if (SwapWeapon) keyPressed(ControlInfo.SwapWeapon);
 
         // Look
         ///Controller
         LookAxisX = Input.GetAxis("LookStickX");
         LookAxisY = Input.GetAxis("LookStickY");
+
         ///Mouse
         if (previousMousePosition != Input.mousePosition) {
             keyPressed(ControlInfo.MouseMoved);

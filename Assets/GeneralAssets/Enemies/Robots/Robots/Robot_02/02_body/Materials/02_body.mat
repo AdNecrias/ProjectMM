@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 02_body
+  m_Shader: {fileID: 4800000, guid: 5493eb3c3e497cb4e8db34a08e333ba5, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: dabff5c5b75a861408c9f8e4d5830e3f, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 225de6e4adced3e49b23482b0fb45749, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _UtilityMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 29f5b4a99dc7f1843b62421966f81186, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Cube
+        second:
+          m_Texture: {fileID: 8900000, guid: 7203ef4bca98ba24997fb320dd49efad, type: 2}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _Glossiness
+        second: 0.56
+      data:
+        first:
+          name: _Alphatest
+        second: 0
+      data:
+        first:
+          name: _TimeScale
+        second: 1
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 0, g: 0.24, b: 1, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Emission
+        second: {r: 0, g: 0.25882354, b: 1, a: 1}
+      data:
+        first:
+          name: _DyeColor1
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _DyeColor2
+        second: {r: 0.45490196, g: 0.45490196, b: 0.45490196, a: 1}
+      data:
+        first:
+          name: _UtilityParameter
+        second: {r: 1, g: 3, b: 10, a: 0.3}
+      data:
+        first:
+          name: _DyeColor
+        second: {r: 1, g: 0.35172412, b: 0, a: 1}
+      data:
+        first:
+          name: _ReflectColor
+        second: {r: 0.45, g: 0.45, b: 0.45, a: 1}

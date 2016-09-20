@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
 
 //TODO Make a AMCharacterControllerCameraAligned version of this controller which aligns it's movement axis to the main camera.
 public class AMCharacterController : MonoBehaviour {
@@ -39,7 +37,7 @@ public class AMCharacterController : MonoBehaviour {
         UpdateLook();
 
         //TODO Remove me.
-        MaterialTest();
+        //MaterialTest();
 	}
 
     void UpdateLook() {
