@@ -3,6 +3,7 @@ Shader "AMShaders/Standard"
 	Properties
 	{
 		_AM_NSOutline("NS Outline", Color) = (0,0,0,0)
+		_AM_HATint("HA tint", Color) = (0,0,0,0)
 		_Color("Color", Color) = (1,1,1,1)
 		_MainTex("Albedo", 2D) = "white" {}
 		

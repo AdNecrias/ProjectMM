@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 487704}
   - 114: {fileID: 11416036}
   m_Layer: 0
-  m_Name: _AMController
+  m_Name: _Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,6 +43,10 @@ MonoBehaviour:
   MovementAxisX: 0
   MovementAxisY: 0
   Dash: 0
+  FireHeld: 0
+  FireAltHeld: 0
+  FireTap: 0
+  FireAltTap: 0
   LookAxisX: 0
   LookAxisY: 0
   MouseLookPoint: {x: 0, y: 0, z: 0}

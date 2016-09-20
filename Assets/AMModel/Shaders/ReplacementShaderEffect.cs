@@ -7,8 +7,10 @@ public class ReplacementShaderEffect : MonoBehaviour {
     public Shader ReplacementShader;
     public bool global = false;
     public Color NSOutline;
+    public float Sharpness;
 
     void OnValidate() {
+        Shader.SetGlobalFloat("_AM_Sharpness", Sharpness);
         if (global) {
             Shader.SetGlobalColor("_AM_NSOutline", NSOutline);
         }

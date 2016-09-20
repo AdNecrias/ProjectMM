@@ -2,8 +2,8 @@
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(AMCharacterController))]
-public class AMCharacterControllerEditor : Editor {
+[CustomEditor(typeof(MainGame.AxisAlignedCharacterController))]
+public class AxisAlignedCharacterController : Editor {
 
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
