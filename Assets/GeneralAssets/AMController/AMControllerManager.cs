@@ -103,7 +103,8 @@ public class AMControllerManager : MonoBehaviour {
         if (Dash && keyPressed != null) keyPressed(ControlInfo.Dash);
 
         //Fire
-        Fire = Input.GetKeyDown(KeyBindings.fire) || Input.GetKeyDown(KeyBindings.fireController);
+        //Fire = Input.GetKeyDown(KeyBindings.fire) || Input.GetKeyDown(KeyBindings.fireController);
+        Fire = Input.GetKeyDown(KeyBindings.fireController);
         if (Fire) keyPressed(ControlInfo.Fire);
 
         FireRelease = Input.GetKeyUp(KeyBindings.fire) || Input.GetKeyUp(KeyBindings.fireController);
