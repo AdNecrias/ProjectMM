@@ -4,7 +4,7 @@
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
-public class ZombieController : MonoBehaviour {
+public class ZombieController : Enemy {
 
     public GameObject target;
     private NavMeshAgent agent;
@@ -25,6 +25,7 @@ public class ZombieController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        base.Update();
         ChasePlayer();
 
 
@@ -46,6 +47,14 @@ public class ZombieController : MonoBehaviour {
         if (Utils.instance.isPlayer(other.gameObject)) {
             target = other.gameObject;
         }
+    }
 
+
+    public override void ReceiveDamage(float dmg) {
+        HP -= dmg;
+    }
+
+    public override void Death() {
+        Destroy(gameObject);
     }
 }

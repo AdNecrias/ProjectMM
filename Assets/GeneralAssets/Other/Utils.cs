@@ -20,4 +20,8 @@ public class Utils : MonoBehaviour {
         return go.tag == "player";
     }
 
+    public bool isEnemy(GameObject go) {
+        return go.tag == "enemy";
+    }
+
 }

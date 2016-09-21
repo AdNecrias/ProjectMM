@@ -21,13 +21,14 @@ public class AMMecanimCharacterController : MonoBehaviour {
     [SerializeField]
     private Vector2 moveDirection;
 
-    private GameObject lookTarget;
     [SerializeField]
     private GameObject bulletSpawnpoint;
     [SerializeField]
     private GameObject bullet;
 
+    [SerializeField]
     private bool isAimming = false;
+    private bool isMoving = false;
 
     // Use this for initialization
     void Start() {
@@ -42,75 +43,54 @@ public class AMMecanimCharacterController : MonoBehaviour {
         AMControllerManager.instance.RegisterKeyReleasedCallback(OnKeyReleased);
         AMControllerManager.instance.RegisterKeyPressedCallback(OnMouseMoved);
 
-        lookTarget = new GameObject();
-        lookTarget.name = this.name + "_LookTarget";
-        lookTarget.transform.parent = this.transform;
-        lookTarget.transform.position = this.transform.forward + this.transform.position;
-
         if (bulletSpawnpoint == null) Debug.LogError("No Bullet Spawnpoint defined.");
     }
 
     // Update is called once per frame
     void Update() {
         UpdateMovement();
+        if (fire) UpdateFire();
+        if (swapWeapon) UpdateSwapWeapon();
     }
 
     private void UpdateMovement() {
         if (anim.GetCurrentAnimatorStateInfo(0).IsTag("locomotion")) {
-            lookDirection =
-                new Vector2(AMControllerManager.instance.LookAxisX, -AMControllerManager.instance.LookAxisY).normalized;
-            moveDirection =
-                new Vector2(AMControllerManager.instance.MovementAxisX, -AMControllerManager.instance.MovementAxisY).normalized;
+            lookDirection = new Vector2(AMControllerManager.instance.LookAxisX, -AMControllerManager.instance.LookAxisY);
+            moveDirection = new Vector2(AMControllerManager.instance.MovementAxisX, AMControllerManager.instance.MovementAxisY);
 
+            isMoving = moveDirection.magnitude > 0.1;
+            isAimming = lookDirection.magnitude > 0.25;
 
             if (isAimming) {
-                //UpdateLook();
+                AimmingMovement();
             } else {
-                //AimmingMovement();
+                GenericMovement();
             }
         }
     }
 
     #region Movement
     //Non Aimming movement
-    private void AimmingMovement() {
-        //looks into left trigger direction
-        lookDirection = new Vector2(AMControllerManager.instance.MovementAxisX, AMControllerManager.instance.MovementAxisY).normalized;
+    private void GenericMovement() {
+        if (isMoving) {
+            transform.forward = new Vector3(moveDirection.x, 0, moveDirection.y);
+        }
 
-        lookTarget.transform.position =
-                new Vector3(
-                        transform.position.x + lookDirection.x,
-                        transform.position.y,
-                        transform.position.z + lookDirection.y
-                    );
-        transform.LookAt(lookTarget.transform);
-        //sets mecanim parameters and moves in that direction
         anim.SetFloat(velZHash,
             Mathf.Sqrt(
-                Mathf.Pow(AMControllerManager.instance.MovementAxisX, 2) +
-                Mathf.Pow(AMControllerManager.instance.MovementAxisY, 2)
+                Mathf.Pow(moveDirection.x, 2) +
+                Mathf.Pow(moveDirection.y, 2)
                 )
-            );
+        );
 
         if (dash) UpdateMovementDash();
-        if (fire) UpdateMovementFire();
-        if (swapWeapon) UpdateSwapWeapon();
     }
 
     //Aimming Movement
-    private void UpdateLook() {
-        Debug.Log("aimming");
-        //lookDirection = new Vector2(AMControllerManager.instance.LookAxisX, -AMControllerManager.instance.LookAxisY).normalized;
-        //if (useMouseLookPoint) {
-        //    useMouseLookPoint = false;
-        //    lookDirection = new Vector2(AMControllerManager.instance.MouseLookPoint.x, AMControllerManager.instance.MouseLookPoint.z);
+    private void AimmingMovement() {
+        transform.forward = new Vector3(lookDirection.x, 0, lookDirection.y);
 
-        //}
-
-        //// TODO Smooth look target movement?
-        //lookTarget.transform.position =
-        //        new Vector3(this.transform.position.x + lookDirection.x, this.transform.position.y, this.transform.position.z + lookDirection.y);
-        //this.transform.LookAt(lookTarget.transform);
+        anim.SetFloat(velZHash, 0); //to be removed
     }
 
     #endregion
@@ -121,7 +101,7 @@ public class AMMecanimCharacterController : MonoBehaviour {
         dash = false;
     }
 
-    private void UpdateMovementFire() {
+    private void UpdateFire() {
         anim.SetBool(fireHash, true);
         fire = false;
     }

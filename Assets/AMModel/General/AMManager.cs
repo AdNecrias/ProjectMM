@@ -7,14 +7,14 @@ namespace AdNecriasMeldowMethod {
         [SerializeField]
         public static AMMPlayer AMMPlayer;
 
-        public Material _NsMaterial;
+        public Material _AMMaterial;
         [Tooltip("Reference to Novelty Seeking positive values material to be applied on elements.")]
         [SerializeField]
-        public static Material NsMaterial;
+        public static Material AMMaterial;
 
         void Awake() {
             AMMPlayer = _AMMPlayer;
-            NsMaterial = _NsMaterial;
+            AMMaterial = _AMMaterial;
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿namespace AdNecriasMeldowMethod {
     public enum AMMEnemyType {
-        zergling,
-        ultralisk,
-        hydralisk
+        zombie_default,
+        zombie_fast,
+        zombie_tank
     }
 }
