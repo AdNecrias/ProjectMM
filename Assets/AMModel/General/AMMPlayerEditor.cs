@@ -9,7 +9,7 @@ namespace AdNecriasMeldowMethod {
             DrawDefaultInspector();
 
             AMMPlayer script = (AMMPlayer)target;
-        
+
             //NSList Editor
             var dic = script.NSList;
             foreach (var d in dic) {
@@ -23,8 +23,12 @@ namespace AdNecriasMeldowMethod {
                 GUILayout.Label("Total encounters: " + d.Value.T);
                 GUILayout.EndHorizontal();
 
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Rarity: " + d.Value.Rarity);
+                GUILayout.EndHorizontal();
+
                 GUILayout.Space(10);
             }
         }
-    } 
+    }
 }

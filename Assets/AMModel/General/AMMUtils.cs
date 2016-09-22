@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace MainGame {
-    public class Utils : MonoBehaviour {
-        public static Utils instance;
+namespace AdNecriasMeldowMethod {
+    public class AMMUtils : MonoBehaviour {
+        public static AMMUtils instance;
 
         public string PlayerTag;
         public string EnemyTag;
