@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+namespace MainGame {
+    public class Enemy : MonoBehaviour {
 
-    public float HP;
+        public float HP;
 
-    public void Update() {
-        if (HP <= 0) {
-            Death();
+        public void Update() {
+            if (HP <= 0) {
+                Death();
+            }
         }
+
+        public virtual void ReceiveDamage(float dmg) { }
+        public virtual void Death() { }
+
     }
-
-    public virtual void ReceiveDamage(float dmg) { }
-    public virtual void Death() { }
-
 }

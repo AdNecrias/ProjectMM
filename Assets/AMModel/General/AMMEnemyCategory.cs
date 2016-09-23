@@ -18,11 +18,22 @@ namespace AdNecriasMeldowMethod {
             get { return r; }
             set {
                 r = Mathf.Clamp(value, -1, 1);
+                Rarity = ComputeRarity();
                 if (UpdateVisual_cb != null) UpdateVisual_cb(this);
             }
         }
 
+        public AMMRarityLevel Rarity;
+
         public Action<AMMEnemyCategory> UpdateVisual_cb;
+
+        private AMMRarityLevel ComputeRarity() {
+            if (r <= 0.25) return AMMRarityLevel.uncommon;
+            if (r <= 0.20) return AMMRarityLevel.rare;
+            if (r <= 0.15) return AMMRarityLevel.legendary;
+            if (r <= 0.05) return AMMRarityLevel.unique;
+            return AMMRarityLevel.common;
+        }
 
         //public override string ToString() {
         //    return "T - " + T + " | R - " + R;

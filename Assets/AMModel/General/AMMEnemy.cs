@@ -7,19 +7,17 @@ namespace AdNecriasMeldowMethod {
 
         public AMMEnemyType Type;
         protected List<Renderer> RendererLstList;
-        protected AMMPlayer player;
 
         void Start() {
             RendererLstList = GetComponentsInChildren<Renderer>().ToList();
-            player = AMManager.AMMPlayer;
         }
 
         void OnEnable() {
-            AMManager.AMMPlayer.RegisterUpdateVisualsCallback(Type, UpdateVisual);
+            AMMPlayer.instance.RegisterUpdateVisualsCallback(Type, UpdateVisual);
         }
 
         void OnDisable() {
-            AMManager.AMMPlayer.UnregisterUpdateVisualCallback(Type, UpdateVisual);
+            AMMPlayer.instance.UnregisterUpdateVisualCallback(Type, UpdateVisual);
         }
 
         protected virtual void UpdateVisual(AMMEnemyCategory R) { }
