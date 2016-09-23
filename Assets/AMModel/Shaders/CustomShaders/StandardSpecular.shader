@@ -4,6 +4,8 @@ Shader "AMShaders/Standard (Specular setup)"
 	{
 		_AM_NSOutline("NS Outline", Color) = (0,0,0,0)
 		_AM_HATint("HA tint", Color) = (0,0,0,0)
+		_AM_Mask("AM Mask", 2D) = "white" {} // NS = r, HA = g, RD = b
+
 		_Color("Color", Color) = (1,1,1,1)
 		_MainTex("Albedo", 2D) = "white" {}
 		

@@ -5,7 +5,7 @@ using UnityEditor;
 namespace AMShaders
 {
     /// <summary>
-    /// This is the altered version of the StandardShaderGUI that comes with Unity. It has all required extra parameters.
+    /// This is the altered version of the StandardShaderGUI that comes with Unity. It has all required extra parameters that the Replacement shaders uses.
     /// </summary>
 internal class StandardShaderGUI : ShaderGUI
 {
@@ -36,6 +36,7 @@ internal class StandardShaderGUI : ShaderGUI
         //AM shaders
         public static GUIContent nsOutlineText = new GUIContent("NS Outline", "Color for the NS outline of AM shaders"); // ignoring tooltip
         public static GUIContent haTintText = new GUIContent("HA Tint", "Color for the HA Tint of AM shaders"); // ignoring tooltip
+        public static GUIContent amMaskText = new GUIContent("AM mask", "Red masks NS, Green masks HA and Blue masks RD"); // ignoring tooltip
         //end AM shaders
         public static GUIContent specularMapText = new GUIContent("Specular", "Specular (RGB) and Smoothness (A)");
 		public static GUIContent metallicMapText = new GUIContent("Metallic", "Metallic (R) and Smoothness (A)");
@@ -64,6 +65,7 @@ internal class StandardShaderGUI : ShaderGUI
         /// AM parameters
     MaterialProperty nsOutline = null;
     MaterialProperty haTint = null;
+    MaterialProperty amMask = null;
         /// end AM parameters
     MaterialProperty specularMap = null;
 	MaterialProperty specularColor = null;
@@ -99,6 +101,7 @@ internal class StandardShaderGUI : ShaderGUI
         /// AM parameters
         nsOutline = FindProperty("_AM_NSOutline", props);
         haTint = FindProperty("_AM_HATint", props);
+        amMask = FindProperty("_AM_Mask", props);
         /// end AM parameters
         specularMap = FindProperty ("_SpecGlossMap", props, false);
 		specularColor = FindProperty ("_SpecColor", props, false);
@@ -155,8 +158,8 @@ internal class StandardShaderGUI : ShaderGUI
 
 			// Primary properties
 			GUILayout.Label (Styles.primaryMapsText, EditorStyles.boldLabel);
-			DoAlbedoArea(material);
             DoAMShadersArea(material);
+            DoAlbedoArea(material);
 			DoSpecularMetallicArea();
 			m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapText, bumpMap, bumpMap.textureValue != null ? bumpScale : null);
 			m_MaterialEditor.TexturePropertySingleLine(Styles.heightMapText, heightMap, heightMap.textureValue != null ? heigtMapScale : null);
@@ -252,6 +255,7 @@ internal class StandardShaderGUI : ShaderGUI
 
     void DoAMShadersArea(Material material) {
         //m_MaterialEditor.TexturePropertySingleLine(Styles.albedoText, albedoMap, albedoColor);
+        m_MaterialEditor.TexturePropertySingleLine(Styles.amMaskText, amMask);
         m_MaterialEditor.ColorProperty(nsOutline, Styles.nsOutlineText.text); // ignoring tooltip
         m_MaterialEditor.ColorProperty(haTint, Styles.haTintText.text); // ignoring tooltip
     }
