@@ -4,7 +4,7 @@ using System;
 using System.Net;
 
 public enum ControlInfo {
-    Dash, MouseMoved, Fire, FireReleased, SwapWeapon
+    Dash, MouseMoved, Fire, FireAlt, FireReleased, SwapWeapon
 }
 
 public static class KeyBindings {
@@ -19,8 +19,13 @@ public static class KeyBindings {
     public static KeyCode dash = KeyCode.LeftShift;
     ///Controller
     public static KeyCode dashController = KeyCode.JoystickButton0; //A
-    public static KeyCode fireController = KeyCode.Joystick1Button5; //Right Trigger
     public static KeyCode swapWeaponController = KeyCode.Joystick1Button3;  //Y
+    public static string fireAxis = "RightTrigger";
+    public static string fireAltAxis = "LeftTrigger";
+    public static string lookAxisX = "LookStickX";
+    public static string lookAxisY = "LookStickY";
+    public static string movementAxisX = "Horizontal";
+    public static string movementAxisY = "Vertical";
 
 }
 
@@ -34,7 +39,7 @@ public class AMControllerManager : MonoBehaviour {
     public float MovementAxisX, MovementAxisY;
     public float LookAxisX, LookAxisY;
     public bool Dash;
-    public bool Fire, FireRelease, SwapWeapon;
+    public bool FireHeld, FireAltHeld, SwapWeapon;
     public Vector3 MouseLookPoint;
 
     Vector3 previousMousePosition;
@@ -103,12 +108,14 @@ public class AMControllerManager : MonoBehaviour {
         if (Dash && keyPressed != null) keyPressed(ControlInfo.Dash);
 
         //Fire
-        //Fire = Input.GetKeyDown(KeyBindings.fire) || Input.GetKeyDown(KeyBindings.fireController);
-        Fire = Input.GetKeyDown(KeyBindings.fireController);
-        if (Fire) keyPressed(ControlInfo.Fire);
-
-        FireRelease = Input.GetKeyUp(KeyBindings.fire) || Input.GetKeyUp(KeyBindings.fireController);
-        if (FireRelease) keyReleased(ControlInfo.FireReleased);
+        FireHeld = Input.GetAxis(KeyBindings.fireAxis) > 0.1f;
+        FireAltHeld = Input.GetAxis(KeyBindings.fireAltAxis) > 0.1f;
+        if (FireHeld && keyPressed != null) {
+            keyPressed(ControlInfo.Fire);
+        }
+        if (FireAltHeld && keyPressed != null) {
+            keyPressed(ControlInfo.FireAlt);
+        }
 
         //Swap Weapon
         SwapWeapon = Input.GetKey(KeyBindings.swapWeaponController);

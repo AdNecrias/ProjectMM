@@ -8438,7 +8438,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 930482146}
-  - 114: {fileID: 930482147}
   m_Layer: 0
   m_Name: CameraStand(Zero'ed)
   m_TagString: Untagged
@@ -8460,18 +8459,6 @@ Transform:
   - {fileID: 251156277}
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!114 &930482147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 930482145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93c5ae4f3548af3419ec69fdefbfa61c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  followTarget: {fileID: 1342657093}
 --- !u!1 &934895657
 GameObject:
   m_ObjectHideFlags: 0
@@ -12053,6 +12040,18 @@ MonoBehaviour:
 GameObject:
   m_PrefabParentObject: {fileID: 150670, guid: d2787c46845850148b567c9404253fe4, type: 2}
   m_PrefabInternal: {fileID: 1351783280}
+--- !u!114 &1342657098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1342657093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea00e360047747646bf882c3036fc0d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 930482146}
 --- !u!4 &1342657100 stripped
 Transform:
   m_PrefabParentObject: {fileID: 457338, guid: d2787c46845850148b567c9404253fe4, type: 2}
@@ -14394,7 +14393,7 @@ GameObject:
   - 114: {fileID: 1591057429}
   m_Layer: 0
   m_Name: AMShader Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
