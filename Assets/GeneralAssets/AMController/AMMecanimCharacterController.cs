@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 public class AMMecanimCharacterController : MonoBehaviour {
+    float sin45 = Mathf.Sin(Mathf.PI / 2);
 
     private Animator anim;
     private int velXHash;
@@ -57,7 +58,8 @@ public class AMMecanimCharacterController : MonoBehaviour {
         if (anim.GetCurrentAnimatorStateInfo(0).IsTag("locomotion")) {
             lookDirection = new Vector2(AMControllerManager.instance.LookAxisX, -AMControllerManager.instance.LookAxisY);
             moveDirection = new Vector2(AMControllerManager.instance.MovementAxisX, AMControllerManager.instance.MovementAxisY);
-
+            //lookDirection = axisAlign(lookDirection);
+            
             isMoving = moveDirection.magnitude > 0.1;
             isAimming = lookDirection.magnitude > 0.25;
 
@@ -90,7 +92,17 @@ public class AMMecanimCharacterController : MonoBehaviour {
     private void AimmingMovement() {
         transform.forward = new Vector3(lookDirection.x, 0, lookDirection.y);
 
-        anim.SetFloat(velZHash, 0); //to be removed
+        var angl = Vector2.Angle(new Vector2(0, 1), lookDirection);
+        //var final = Quaternion.Euler(0, angl, 0) * moveDirection;
+        if(lookDirection.x < 0) {
+            angl = 360 - angl;
+        }
+        var final = Rotate(moveDirection, angl);
+
+        Debug.Log( angl + " "+ final);
+
+        anim.SetFloat(velZHash, final.y);
+        anim.SetFloat(velXHash, final.x);
     }
 
     #endregion
@@ -108,6 +120,22 @@ public class AMMecanimCharacterController : MonoBehaviour {
 
     private void UpdateSwapWeapon() {
         swapWeapon = false;
+    }
+
+    Vector2 axisAlign(Vector2 input, float rad) {
+        // TODO: if camera stops being isometric this wont work
+        return new Vector2((input.y + input.x) * sin45, (input.y - input.x) * sin45);
+    }
+
+    public Vector2 Rotate(this Vector2 v, float degrees) {
+        float sin = Mathf.Sin(degrees * Mathf.Deg2Rad);
+        float cos = Mathf.Cos(degrees * Mathf.Deg2Rad);
+
+        float tx = v.x;
+        float ty = v.y;
+        v.x = (cos * tx) - (sin * ty);
+        v.y = (sin * tx) + (cos * ty);
+        return v;
     }
 
     private void OnKeyPressed(ControlInfo info) {
