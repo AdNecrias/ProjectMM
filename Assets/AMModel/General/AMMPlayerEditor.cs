@@ -12,6 +12,12 @@ namespace AdNecriasMeldowMethod {
 
             //NSList Editor
             var dic = script.NSList;
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Total enemies encountered: " + script.GetTotalEnemiesEncountered());
+            GUILayout.EndHorizontal();
+
+
             foreach (var d in dic) {
                 GUILayout.Label("AMMEnemy: " + d.Key, EditorStyles.boldLabel);
 

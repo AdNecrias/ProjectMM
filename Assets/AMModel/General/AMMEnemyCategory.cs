@@ -28,10 +28,10 @@ namespace AdNecriasMeldowMethod {
         public Action<AMMEnemyCategory> UpdateVisual_cb;
 
         private AMMRarityLevel ComputeRarity() {
-            if (r <= 0.25) return AMMRarityLevel.uncommon;
-            if (r <= 0.20) return AMMRarityLevel.rare;
-            if (r <= 0.15) return AMMRarityLevel.legendary;
             if (r <= 0.05) return AMMRarityLevel.unique;
+            if (r <= 0.15) return AMMRarityLevel.legendary;
+            if (r <= 0.20) return AMMRarityLevel.rare;
+            if (r <= 0.25) return AMMRarityLevel.uncommon;
             return AMMRarityLevel.common;
         }
 

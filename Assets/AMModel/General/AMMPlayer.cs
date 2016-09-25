@@ -29,7 +29,6 @@ namespace AdNecriasMeldowMethod {
         [Tooltip("List that records all the encounters the player had during the progression. This values should be stored when changing scenes.")]
         public Dictionary<AMMEnemyType, AMMEnemyCategory> NSList = new Dictionary<AMMEnemyType, AMMEnemyCategory>();
 
-        [SerializeField]
         private int TotalEnemiesEncountered = 0;
 
         public void RegisterUpdateVisualsCallback(AMMEnemyType type, Action<AMMEnemyCategory> action) {
@@ -66,7 +65,7 @@ namespace AdNecriasMeldowMethod {
 
                 //Update Rarity
                 foreach (var ec in NSList) {
-                    ec.Value.R = ec.Value.T / TotalEnemiesEncountered;
+                    ec.Value.R = (float) ec.Value.T / TotalEnemiesEncountered;
 
                     //Update own rarity
                     //if (ec.Key == type) {
@@ -86,7 +85,7 @@ namespace AdNecriasMeldowMethod {
         public float GetNS() { return NS; }
         public float GetHA() { return HA; }
         public float GetRD() { return RD; }
-        public float GetTotalEnemiesEncountered() { return TotalEnemiesEncountered; }
+        public int GetTotalEnemiesEncountered() { return TotalEnemiesEncountered; }
 
         public void SetNS(float value) { NS = value; }
         public void SetHA(float value) { HA = value; }
