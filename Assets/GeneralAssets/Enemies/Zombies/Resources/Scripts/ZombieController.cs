@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AdNecriasMeldowMethod;
+using UnityEngine;
 
 namespace MainGame {
     [RequireComponent(typeof(NavMeshAgent))]
@@ -15,6 +16,11 @@ namespace MainGame {
         private Vector3 previousPosition;
         public float curSpeed;
 
+        [SerializeField]
+        [Tooltip("THIS IS TO BE DETERMINED BY THE PLAYER - USED FOR DEBUG TO CHOSE THE ZOMBIE ATTACK THREAT.")]
+        private ThreatLevel threatLevel;
+
+
         // Use this for initialization
         void Start() {
             agent = GetComponent<NavMeshAgent>();
@@ -27,6 +33,16 @@ namespace MainGame {
         void Update() {
             base.Update();
             ChasePlayer();
+            if (target != null && IsPlayerNear() && CanAttackDueCooldown()) AttackTarget();
+        }
+
+        private void AttackTarget() {
+            //do attack stuff
+            mainAttackCooldown = 2;
+            anim.SetTrigger("attack");   
+            //Do not like this at all! 
+            //This is to be done in the player, and he must select the correct threat level
+            AMMPlayer.ExecuteOnEntityInteracted(GetComponent<AdNecriasMeldowMethod.Enemy>().Type, threatLevel);
         }
 
         private void ChasePlayer() {
@@ -54,6 +70,10 @@ namespace MainGame {
 
         public override void Death() {
             Destroy(gameObject);
+        }
+
+        public bool IsPlayerNear() {
+            return Vector3.Distance(transform.position, target.transform.position) <= 2;
         }
     }
 }

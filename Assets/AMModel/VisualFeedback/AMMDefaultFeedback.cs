@@ -10,13 +10,13 @@ namespace AdNecriasMeldowMethod {
 
         public Color color = Color.cyan;
 
-        protected override void UpdateVisual(AMMEnemyCategory ec) {
+        protected override void UpdateVisual(EnemyCategory ec) {
             UpdateNoveltySeeking(ec);
 
             //StartCoroutine(UpdateVisualTransistionCR(R, 0.1f));
         }
 
-        private void UpdateNoveltySeeking(AMMEnemyCategory ec) {
+        private void UpdateNoveltySeeking(EnemyCategory ec) {
             foreach (var renderer in RendererLstList) {
                 //version 0.1
                 foreach (var material in renderer.materials) {

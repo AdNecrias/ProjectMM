@@ -182,7 +182,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 3470422}
   m_LocalRotation: {x: 6.1617378e-15, y: -0.85593027, z: -0.00000010203483, w: 0.51709133}
-  m_LocalPosition: {x: -6.465, y: 0.5471101, z: 21.722}
+  m_LocalPosition: {x: -6.465, y: 0.5471101, z: 1.6}
   m_LocalScale: {x: 0.9160372, y: 0.9160372, z: 0.9160377}
   m_LocalEulerAnglesHint: {x: 0, y: -117.725296, z: 0}
   m_Children: []
@@ -4663,7 +4663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTag: player
   EnemyTag: enemy
---- !u!114 &503945665
+--- !u!114 &503945664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -4674,8 +4674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf67568593d4f649889037d38e4beff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerTag: player
-  EnemyTag: enemy
 --- !u!1 &503968163
 GameObject:
   m_ObjectHideFlags: 0
@@ -5641,7 +5639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae26b60734c2f064b86cf13dde28fd8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 1
+  EntityType: 0
   TotalsText: {fileID: 379162994}
   RarityText: {fileID: 446093362}
   ThreatText: {fileID: 0}
@@ -8935,7 +8933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae26b60734c2f064b86cf13dde28fd8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 0
+  EntityType: 0
   TotalsText: {fileID: 1678578141}
   RarityText: {fileID: 1507738720}
   ThreatText: {fileID: 0}
@@ -12891,7 +12889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae26b60734c2f064b86cf13dde28fd8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 2
+  EntityType: 0
   TotalsText: {fileID: 826382068}
   RarityText: {fileID: 114305721}
   ThreatText: {fileID: 0}

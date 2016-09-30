@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AdNecriasMeldowMethod {
     public class AMMEnemy : MonoBehaviour {
 
-        public AMMEnemyType Type;
+        public EntityType Type;
         protected List<Renderer> RendererLstList;
 
         void Start() {
@@ -20,6 +20,6 @@ namespace AdNecriasMeldowMethod {
             AMMPlayer.instance.UnregisterUpdateVisualCallback(Type, UpdateVisual);
         }
 
-        protected virtual void UpdateVisual(AMMEnemyCategory R) { }
+        protected virtual void UpdateVisual(EnemyCategory R) { }
     }
 }

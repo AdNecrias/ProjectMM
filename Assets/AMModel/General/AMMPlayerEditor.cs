@@ -10,8 +10,8 @@ namespace AdNecriasMeldowMethod {
 
             AMMPlayer script = (AMMPlayer)target;
 
-            //NSList Editor
-            var dic = script.NSList;
+            //EntityList Editor
+            var dic = script.EntityList;
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Total enemies encountered: " + script.GetTotalEnemiesEncountered());
@@ -31,6 +31,10 @@ namespace AdNecriasMeldowMethod {
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Rarity: " + d.Value.Rarity);
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Threat: " + d.Value.Threat);
                 GUILayout.EndHorizontal();
 
                 GUILayout.Space(10);
