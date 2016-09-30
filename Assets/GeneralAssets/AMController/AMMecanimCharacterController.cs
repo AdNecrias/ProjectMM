@@ -3,7 +3,10 @@ using UnityEngine;
 using System.Collections;
 
 public class AMMecanimCharacterController : MonoBehaviour {
+    float sin45 = Mathf.Sin(Mathf.PI / 2);
 
+    [SerializeField]
+    private Camera cam;
     private Animator anim;
     private int velXHash;
     private int velZHash;
@@ -33,6 +36,7 @@ public class AMMecanimCharacterController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         anim = GetComponentInChildren<Animator>();
+        cam = Camera.main;
         velXHash = Animator.StringToHash("vel_X");
         velZHash = Animator.StringToHash("vel_Z");
         dashHash = Animator.StringToHash("dash");
@@ -40,7 +44,7 @@ public class AMMecanimCharacterController : MonoBehaviour {
         swapWeaponHash = Animator.StringToHash("swap_weapon");
 
         AMControllerManager.instance.RegisterKeyPressedCallback(OnKeyPressed);
-        AMControllerManager.instance.RegisterKeyReleasedCallback(OnKeyReleased);
+        //AMControllerManager.instance.RegisterKeyReleasedCallback(OnKeyReleased);
         AMControllerManager.instance.RegisterKeyPressedCallback(OnMouseMoved);
 
         if (bulletSpawnpoint == null) Debug.LogError("No Bullet Spawnpoint defined.");
@@ -49,7 +53,7 @@ public class AMMecanimCharacterController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         UpdateMovement();
-        if (fire) UpdateFire();
+        UpdateFire();
         if (swapWeapon) UpdateSwapWeapon();
     }
 
@@ -57,6 +61,12 @@ public class AMMecanimCharacterController : MonoBehaviour {
         if (anim.GetCurrentAnimatorStateInfo(0).IsTag("locomotion")) {
             lookDirection = new Vector2(AMControllerManager.instance.LookAxisX, -AMControllerManager.instance.LookAxisY);
             moveDirection = new Vector2(AMControllerManager.instance.MovementAxisX, AMControllerManager.instance.MovementAxisY);
+            //lookDirection = axisAlign(lookDirection);
+
+            // Calculating camera rotation
+            var angl = 360 - cam.transform.rotation.eulerAngles.y;
+            moveDirection = Rotate(moveDirection, angl);
+            lookDirection = Rotate(lookDirection, angl);
 
             isMoving = moveDirection.magnitude > 0.1;
             isAimming = lookDirection.magnitude > 0.25;
@@ -90,7 +100,12 @@ public class AMMecanimCharacterController : MonoBehaviour {
     private void AimmingMovement() {
         transform.forward = new Vector3(lookDirection.x, 0, lookDirection.y);
 
-        anim.SetFloat(velZHash, 0); //to be removed
+        var angl = Vector2.Angle(new Vector2(0, 1), lookDirection);
+        if (lookDirection.x < 0) { angl = 360 - angl; }
+        var final = Rotate(moveDirection, angl);
+
+        anim.SetFloat(velZHash, final.y);
+        anim.SetFloat(velXHash, final.x);
     }
 
     #endregion
@@ -102,12 +117,28 @@ public class AMMecanimCharacterController : MonoBehaviour {
     }
 
     private void UpdateFire() {
-        anim.SetBool(fireHash, true);
+        anim.SetBool(fireHash, fire);
         fire = false;
     }
 
     private void UpdateSwapWeapon() {
         swapWeapon = false;
+    }
+
+    Vector2 axisAlign(Vector2 input, float rad) {
+        // TODO: if camera stops being isometric this wont work
+        return new Vector2((input.y + input.x) * sin45, (input.y - input.x) * sin45);
+    }
+
+    public Vector2 Rotate(Vector2 v, float degrees) {
+        float sin = Mathf.Sin(degrees * Mathf.Deg2Rad);
+        float cos = Mathf.Cos(degrees * Mathf.Deg2Rad);
+
+        float tx = v.x;
+        float ty = v.y;
+        v.x = (cos * tx) - (sin * ty);
+        v.y = (sin * tx) + (cos * ty);
+        return v;
     }
 
     private void OnKeyPressed(ControlInfo info) {
