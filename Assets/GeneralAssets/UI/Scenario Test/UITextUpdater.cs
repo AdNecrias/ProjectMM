@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UI {
     public class UITextUpdater : MonoBehaviour {
-        public AMMEnemyType EnemyType;
+        public EntityType EntityType;
         public Text TotalsText;
         public Text RarityText;
         public Text ThreatText;
@@ -19,8 +19,8 @@ namespace UI {
         // Update is called once per frame
         void Update() {
             try {
-                TotalsText.text = Player.NSList[EnemyType].T.ToString();
-                RarityText.text = Player.NSList[EnemyType].R.ToString();
+                TotalsText.text = Player.EntityList[EntityType].T.ToString();
+                RarityText.text = Player.EntityList[EntityType].R.ToString();
             } catch (Exception e) {
 
             }

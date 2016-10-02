@@ -6,6 +6,13 @@ namespace AdNecriasMeldowMethod {
     public class AMMPlayer : MonoBehaviour {
         public static AMMPlayer instance;
 
+        //Not currently used
+        public delegate void EntitySighted();
+        public static event EntitySighted OnEntitySighted;
+
+        public delegate void EntityInteracted(EntityType entityType, ThreatLevel threatLevel);
+        public static event EntityInteracted OnEntityInteracted;
+
         [Space(10)]
         [Header("Adnecrias-Meldow Personality Model")]
 
@@ -27,17 +34,17 @@ namespace AdNecriasMeldowMethod {
         [Space(10)]
         [Header("Other")]
         [Tooltip("List that records all the encounters the player had during the progression. This values should be stored when changing scenes.")]
-        public Dictionary<AMMEnemyType, AMMEnemyCategory> NSList = new Dictionary<AMMEnemyType, AMMEnemyCategory>();
+        public Dictionary<EntityType, EnemyCategory> EntityList = new Dictionary<EntityType, EnemyCategory>();
 
-        private int TotalEnemiesEncountered = 0;
+        private int TotalEntitiesEncountered = 0;
 
-        public void RegisterUpdateVisualsCallback(AMMEnemyType type, Action<AMMEnemyCategory> action) {
-            if (!NSList.ContainsKey(type)) NSList.Add(type, new AMMEnemyCategory());
-            NSList[type].UpdateVisual_cb += action;
+        public void RegisterUpdateVisualsCallback(EntityType type, Action<EnemyCategory> action) {
+            if (!EntityList.ContainsKey(type)) EntityList.Add(type, new EnemyCategory());
+            EntityList[type].UpdateVisual_cb += action;
         }
 
-        public void UnregisterUpdateVisualCallback(AMMEnemyType type, Action<AMMEnemyCategory> action) {
-            NSList[type].UpdateVisual_cb -= action;
+        public void UnregisterUpdateVisualCallback(EntityType type, Action<EnemyCategory> action) {
+            EntityList[type].UpdateVisual_cb -= action;
         }
 
         public void singleton() {
@@ -54,29 +61,20 @@ namespace AdNecriasMeldowMethod {
 
         void OnTriggerEnter(Collider other) {
             //Check if found an Enemy
-            if (other.tag == AMMUtils.instance.EnemyTag) {
-
+            if (Utils.isEnemy(other.tag)) {
                 //Updates total enemies encountered amount
-                TotalEnemiesEncountered += 1;
+                TotalEntitiesEncountered += 1;
 
                 //Increment type total
                 var type = other.GetComponentInParent<AMMEnemy>().Type;
-                NSList[type].T++;
+                EntityList[type].T++;
 
                 //Update Rarity
-                foreach (var ec in NSList) {
-                    ec.Value.R = (float) ec.Value.T / TotalEnemiesEncountered;
+                foreach (var ec in EntityList) {
+                    ec.Value.R = (float)ec.Value.T / TotalEntitiesEncountered;
 
-                    //Update own rarity
-                    //if (ec.Key == type) {
-                    //    //decrement ec.R based on ec.T
-                    //    ec.Value.R += 0.1f;
-                    //}
-                    ////Update all others rarity
-                    //else {
-                    //    //increment ec.R based on ec.T
-                    //    ec.Value.R += 0.1f;
-                    //}
+                    //Set default values if previouse met
+                    if (OnEntityInteracted != null) OnEntityInteracted(type, ec.Value.Threat);
                 }
             }
         }
@@ -85,11 +83,22 @@ namespace AdNecriasMeldowMethod {
         public float GetNS() { return NS; }
         public float GetHA() { return HA; }
         public float GetRD() { return RD; }
-        public int GetTotalEnemiesEncountered() { return TotalEnemiesEncountered; }
+        public int GetTotalEnemiesEncountered() { return TotalEntitiesEncountered; }
 
         public void SetNS(float value) { NS = value; }
         public void SetHA(float value) { HA = value; }
         public void SetRD(float value) { RD = value; }
         #endregion
+
+        private static void OnOnEntitySighted() {
+            var handler = OnEntitySighted;
+            if (handler != null) handler();
+        }
+
+        public static void ExecuteOnEntityInteracted(EntityType entityType, ThreatLevel threatLevel)
+        {
+            AMMPlayer.instance.EntityList[entityType].Threat = threatLevel;
+            if (OnEntityInteracted != null) OnEntityInteracted(entityType, threatLevel);
+        }
     }
 }

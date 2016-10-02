@@ -134,6 +134,8 @@ GameObject:
   - 54: {fileID: 5425770}
   - 114: {fileID: 11453966}
   - 114: {fileID: 11429238}
+  - 114: {fileID: 11439994}
+  - 114: {fileID: 11445822}
   m_Layer: 0
   m_Name: Zombie_5
   m_TagString: Untagged
@@ -895,6 +897,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   color: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &11439994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8d34df58046c64fb3cdf4d53d9cba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
+--- !u!114 &11445822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19fb5e376404290488fb85ff7f68be17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultThreatLevel: 0
+  animationSpeed: 1.18
+  maximumSize: 4.41
+  severeStep: 1.27
+  highStep: 0.77
+  elevatedStep: 0.44
+  guardedStep: 0
+  lowStep: 0
 --- !u!114 &11453966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -907,8 +940,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 15
+  mainAttackCooldown: 0
   target: {fileID: 0}
   curSpeed: 0
+  threatLevel: 0
 --- !u!135 &13572606
 SphereCollider:
   m_ObjectHideFlags: 1
