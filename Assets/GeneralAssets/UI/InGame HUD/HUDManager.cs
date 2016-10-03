@@ -21,21 +21,35 @@ public class HUDManager : MonoBehaviour {
     void Start () {
         ActiveQuestLogs = new List<QuestLog>();
         AvailableItems = new List<Object>();
-	}
+
+        Debug.LogError("HUDManager listening for key T. Remove me when not needed.");
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.LogError("HUDManager listening for key T. Remove me when not needed.");
 	    if(Input.GetKeyDown(KeyCode.T)) {
             AddEntry("Lorem Ipquaquelcoisa", 5);
         }
 	}
 
-    void AddEntry(string text, float lifetime) {
-        AddEntry(text, Color.white, lifetime);
+    /// <summary>
+    /// Adds a new entry to the quest log with the default color of white.
+    /// </summary>
+    /// <param name="text">Text to appear in text log.</param>
+    /// <param name="lifetime">Lifetime to fade and delete itself. Value of 0 will disable deletion and fading, you are responsible for deleting the log yourself.</param>
+    /// <returns>Returns the new text entry's GameObject, so you can delete it earlier or manipulate it. </returns>
+    GameObject AddEntry(string text, float lifetime) {
+        return AddEntry(text, Color.white, lifetime);
     }
 
-    void AddEntry(string text, Color color, float lifetime) {
+    /// <summary>
+    /// Adds a new entry to the quest log.
+    /// </summary>
+    /// <param name="text">Text to appear in text log.</param>
+    /// <param name="color">Color the text should appear in.</param>
+    /// <param name="lifetime">Lifetime to fade and delete itself. Value of 0 will disable deletion and fading, you are responsible for deleting the log yourself.</param>
+    /// <returns>Returns the new text entry's GameObject, so you can delete it earlier or manipulate it. </returns>
+    GameObject AddEntry(string text, Color color, float lifetime) {
         ActiveQuestLogs.Add(new QuestLog(text));
         GameObject go = (GameObject) Instantiate(QuestLogTextPrefab);
         go.name = text;
@@ -48,7 +62,12 @@ public class HUDManager : MonoBehaviour {
         FadeTextOverLifetime fadeComponent = (FadeTextOverLifetime) go.GetComponent<FadeTextOverLifetime>();
         fadeComponent.Lifetime = lifetime;
 
-        Destroy(go, lifetime);
+        if (lifetime == 0) {
+            Destroy(fadeComponent);
+        } else {
+            Destroy(go, lifetime);
+        }
+        return go;
         
     }
 }

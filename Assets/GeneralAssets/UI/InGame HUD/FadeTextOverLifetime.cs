@@ -25,6 +25,12 @@ public class FadeTextOverLifetime : MonoBehaviour {
             return;
         }
         timeLived += Time.deltaTime;
-        text.color = Color.Lerp(initialColor, targetColor, (timeLived*timeLived) / Lifetime);
+        text.color = Color.Lerp(initialColor, targetColor, applyFunction(timeLived/Lifetime));
 	}
+
+    float applyFunction(float x) {
+        //return x * x;
+        float quad = x * x;
+        return Mathf.Sin(quad) * (quad);
+    }
 }
